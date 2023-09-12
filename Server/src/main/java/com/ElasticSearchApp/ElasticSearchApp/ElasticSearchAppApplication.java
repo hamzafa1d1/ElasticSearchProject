@@ -1,13 +1,13 @@
-package com.ElasticSerachApp.ElasticSerachApp;
+package com.ElasticSearchApp.ElasticSearchApp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ElasticSerachAppApplication {
+public class ElasticSearchAppApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ElasticSerachAppApplication.class, args);
+		SpringApplication.run(ElasticSearchAppApplication.class, args);
 	}
 
 }

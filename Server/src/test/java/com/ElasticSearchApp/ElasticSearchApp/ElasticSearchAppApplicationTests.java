@@ -1,10 +1,10 @@
-package com.ElasticSerachApp.ElasticSerachApp;
+package com.ElasticSearchApp.ElasticSearchApp;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ElasticSerachAppApplicationTests {
+class ElasticSearchAppApplicationTests {
 
 	@Test
 	void contextLoads() {
