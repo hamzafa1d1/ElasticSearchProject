@@ -1,5 +1,8 @@
 package com.ElasticSearchApp.ElasticSearchApp.Models;
 
+import lombok.AllArgsConstructor;
+
+//@AllArgsConstructor
 public class ImageUrl {
-    String ImageUrl;
+    public String ImageUrl;
 }
