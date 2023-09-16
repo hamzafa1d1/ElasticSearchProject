@@ -135,6 +135,17 @@ body {
   transform: translateY(1px);
 }
 
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); /* Adjust the column width as needed */
+  grid-gap: 20px; /* Adjust the spacing between images as needed */
+}
+
+.image-item img {
+  max-width: 100%;
+  height: auto;
+}
+
 @media screen and (prefers-color-scheme: dark) {
   body, input {
     color: #f1f1f1;
