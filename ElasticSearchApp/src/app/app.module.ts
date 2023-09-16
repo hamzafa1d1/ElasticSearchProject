@@ -5,17 +5,13 @@ import { AppComponent } from './app.component';
 import { MainPageComponent } from './Components/main-page/main-page.component';
 import { SearchBarComponent } from './Components/search-bar/search-bar.component';
 import {HttpClientModule} from "@angular/common/http";
-import { ImagesSectionComponent } from './Components/images-section/images-section.component';
-import { ImageCardComponent } from './Components/image-card/image-card.component';
 import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
     AppComponent,
     MainPageComponent,
-    SearchBarComponent,
-    ImagesSectionComponent,
-    ImageCardComponent
+    SearchBarComponent
   ],
   imports: [
     BrowserModule,
