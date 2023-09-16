@@ -1,6 +1,12 @@
-<form action="" class="search-bar">
-  <input type="search" name="search" pattern=".*\S.*" required>
+<form action="" class="search-bar" (ngSubmit)="search()">
+  <input type="search" name="search" pattern=".*\S.*" required [(ngModel)]="searchTerm">
   <button class="search-btn" type="submit">
     <span>Search</span>
   </button>
 </form>
+<div class="image-grid" *ngIf="!isLoading">
+  <div class="image-item" *ngFor="let imageUrl of listOfImageUrls">
+    <img src="{{imageUrl.url}}" />
+  </div>
+</div>
+
