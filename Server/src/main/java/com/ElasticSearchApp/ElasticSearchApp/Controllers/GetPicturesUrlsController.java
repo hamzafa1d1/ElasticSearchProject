@@ -11,6 +11,7 @@ import reactor.core.publisher.Mono;
 import java.util.List;
 
 @RestController
+@CrossOrigin("http://localhost:4200/")
 @RequestMapping("/ElasticSearchApp")
 public class GetPicturesUrlsController {
     @Autowired

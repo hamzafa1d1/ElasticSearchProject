@@ -36,7 +36,7 @@ public class ElasticSearchService {
         ElasticSearchQuery.MultiMatch multiMatch = new ElasticSearchQuery.MultiMatch();
 
         multiMatch.setQuery(searchTerm);
-        multiMatch.setFuzziness("auto");
+        multiMatch.setFuzziness("Auto");
         multiMatch.setFields(List.of("tags", "title"));
 
         query.setMulti_match(multiMatch);
