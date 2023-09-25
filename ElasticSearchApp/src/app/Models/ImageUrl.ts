@@ -1,3 +1,3 @@
 export interface ImageUrl{
-  url:string;
+  ImageUrl:string;
 }
