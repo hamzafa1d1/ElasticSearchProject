@@ -1,6 +1,10 @@
 import os
 import csv
 import requests
+
+# we use this class to clean the dataset that we have
+# for flicker photos and keep only rows with non corrupted images
+
 class ImageCleaning:
 
     csv_file_path = r'C:\Users\HamzaFaidi\Desktop\Supcom Things\ter_indexation_p1_atelier1\photo_metadata_ex.csv'
@@ -19,7 +23,8 @@ class ImageCleaning:
         os.makedirs(self.output_directory, exist_ok=True)
 
         # List to store non-corrupted URLs
-        non_corrupted_urls = []
+        rows_with_non_corrupted_urls = []
+        header = []
 
         # Open and read the CSV file
         with open(self.csv_file_path, 'r', newline='') as csvfile:
@@ -29,22 +34,25 @@ class ImageCleaning:
                 #skip first line containing column desc
                 if(i ==0):
                     i+=1
+                    header = row
+                    header.append('Url')
                     continue
 
                 # Download the image
                 url = self.generateImageUrl(row)
                 if(self.checkImageIsNotCorrupted(url)):
-                    non_corrupted_urls.append(url)
+                    row.append(url)
+                    rows_with_non_corrupted_urls.append(row)
 
-        self.generateCSV(non_corrupted_urls)
+        self.generateCSV(rows_with_non_corrupted_urls, header)
 
-    def generateCSV(self, non_corrupted_urls):
+    def generateCSV(self, rows_with_non_corrupted_urls, header):
         # Create a new CSV file with non-corrupted URLs
         with open(self.new_csv_file_path, 'w', newline='') as new_csvfile:
             writer = csv.writer(new_csvfile)
-            writer.writerow(['URL'])  # Write the header
-            for url in non_corrupted_urls:
-                writer.writerow([url])
+            writer.writerow(header)  # Write the header
+            for row in rows_with_non_corrupted_urls:
+                writer.writerow(row)
         print(f"Corrupted images have been deleted. Non-corrupted URLs saved to '{self.new_csv_file_path}'.")
 
     def generateImageUrl(self, row):
