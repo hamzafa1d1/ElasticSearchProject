@@ -1,32 +1,17 @@
 import os
 import csv
 import requests
-
 class ImageCleaning:
 
-    csv_file_path = 'corrupted_images.csv'
-    output_directory = 'downloaded_images'
-
-    def is_image_corrupted(image_path):
-        try:
-            # Check if the image file can be opened without errors
-            with open(image_path, 'rb') as img_file:
-                _ = img_file.read()
-            return False
-        except Exception as e:
-            return True
-
-    def download_image(url, output_dir):
+    csv_file_path = r'C:\Users\HamzaFaidi\Desktop\Supcom Things\ter_indexation_p1_atelier1\photo_metadata_ex.csv'
+    output_directory = r'C:\Users\HamzaFaidi\Desktop\Supcom Things\ter_indexation_p1_atelier1'
+    new_csv_file_path = r'C:\Users\HamzaFaidi\Desktop\Supcom Things\ter_indexation_p1_atelier1\cleanedFile.csv'
+    def checkImageIsNotCorrupted(self, url):
         response = requests.get(url)
         if response.status_code == 200:
-            # Extract the image filename from the URL
-            filename = os.path.basename(url)
-            output_path = os.path.join(output_dir, filename)
-            with open(output_path, 'wb') as img_file:
-                img_file.write(response.content)
-            return output_path
+            return True
         else:
-            return None
+            return False
 
     def cleaning(self):
 
@@ -38,26 +23,34 @@ class ImageCleaning:
 
         # Open and read the CSV file
         with open(self.csv_file_path, 'r', newline='') as csvfile:
+            i = 0
             reader = csv.reader(csvfile)
             for row in reader:
-                url = row[0]
+                #skip first line containing column desc
+                if(i ==0):
+                    i+=1
+                    continue
+
                 # Download the image
-                image_path = self.download_image(url, self.output_directory)
-                if image_path:
-                    # Check if the downloaded image is corrupted
-                    if not self.is_image_corrupted(image_path):
-                        non_corrupted_urls.append(url)
-                    else:
-                        # Delete the corrupted image
-                        os.remove(image_path)
+                url = self.generateImageUrl(row)
+                if(self.checkImageIsNotCorrupted(url)):
+                    non_corrupted_urls.append(url)
+
+        self.generateCSV(non_corrupted_urls)
 
     def generateCSV(self, non_corrupted_urls):
         # Create a new CSV file with non-corrupted URLs
-        new_csv_file_path = 'non_corrupted_images.csv'
-        with open(new_csv_file_path, 'w', newline='') as new_csvfile:
+        with open(self.new_csv_file_path, 'w', newline='') as new_csvfile:
             writer = csv.writer(new_csvfile)
             writer.writerow(['URL'])  # Write the header
             for url in non_corrupted_urls:
                 writer.writerow([url])
+        print(f"Corrupted images have been deleted. Non-corrupted URLs saved to '{self.new_csv_file_path}'.")
 
-        print(f"Corrupted images have been deleted. Non-corrupted URLs saved to '{new_csv_file_path}'.")
+    def generateImageUrl(self, row):
+        return "http://farm" + str(row[12]) + ".staticflickr.com/" + str(row[11]) + "/" + str(row[0]) + "_" + str(
+            row[10]) + ".jpg"
+
+## running the cleaning script
+cleaningInstance = ImageCleaning()
+cleaningInstance.cleaning()
