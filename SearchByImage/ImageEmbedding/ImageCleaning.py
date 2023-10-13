@@ -6,6 +6,7 @@ class ImageCleaning:
     csv_file_path = r'C:\Users\HamzaFaidi\Desktop\Supcom Things\ter_indexation_p1_atelier1\photo_metadata_ex.csv'
     output_directory = r'C:\Users\HamzaFaidi\Desktop\Supcom Things\ter_indexation_p1_atelier1'
     new_csv_file_path = r'C:\Users\HamzaFaidi\Desktop\Supcom Things\ter_indexation_p1_atelier1\cleanedFile.csv'
+
     def checkImageIsNotCorrupted(self, url):
         response = requests.get(url)
         if response.status_code == 200:
