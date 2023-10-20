@@ -13,4 +13,7 @@ export class ImagesService {
   getImageUrls(searchText: SearchText): Observable<ImageUrl[]>{
     return this.http.post<ImageUrl[]>(endpoints.ServerUrl + endpoints.GetImages, searchText);
   }
+  getImageUrlsWhenSearchingByImage(image: File): Observable<ImageUrl[]>{
+    return this.http.post<ImageUrl[]>(endpoints.ServerUrl + endpoints.GetImagesWhenSearchingByPicture, image);
+  }
 }
