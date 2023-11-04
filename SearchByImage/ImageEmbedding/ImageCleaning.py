@@ -2,6 +2,9 @@ import os
 import csv
 import requests
 
+from ImageEmbedding.EmbeddingsGenerator import EmbeddingsGenerator
+
+
 # we use this class to clean the dataset that we have
 # for flicker photos and keep only rows with non corrupted images
 
@@ -26,6 +29,7 @@ class ImageCleaning:
         # List to store non-corrupted URLs
         rows_with_non_corrupted_urls = []
         header = []
+        embeddingsGenerator = EmbeddingsGenerator()
 
         # Open and read the CSV file
         with open(self.csv_file_path, 'r', newline='') as csvfile:
@@ -37,12 +41,14 @@ class ImageCleaning:
                     i+=1
                     header = row
                     header.append('Url')
+                    header.append('imageEmbedding')
                     continue
 
                 # Download the image
                 url = self.generateImageUrl(row)
                 if(self.checkImageIsNotCorrupted(url)):
                     row.append(url)
+                    row.append(embeddingsGenerator.generateFromUrl(url))
                     rows_with_non_corrupted_urls.append(row)
 
         self.generateCSV(rows_with_non_corrupted_urls, header)
