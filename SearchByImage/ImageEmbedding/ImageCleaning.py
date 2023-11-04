@@ -2,7 +2,7 @@ import os
 import csv
 import requests
 
-from ImageEmbedding.EmbeddingsGenerator import EmbeddingsGenerator
+from EmbeddingsGenerator import EmbeddingsGenerator
 
 
 # we use this class to clean the dataset that we have
@@ -10,9 +10,9 @@ from ImageEmbedding.EmbeddingsGenerator import EmbeddingsGenerator
 
 class ImageCleaning:
 
-    csv_file_path = r'C:\Users\HamzaFaidi\Desktop\Supcom Things\ter_indexation_p1_atelier1\photo_metadata_ex.csv'
-    output_directory = r'C:\Users\HamzaFaidi\Desktop\Supcom Things\ter_indexation_p1_atelier1'
-    new_csv_file_path = r'C:\Users\HamzaFaidi\Desktop\Supcom Things\ter_indexation_p1_atelier1\cleanedFile.csv'
+    csv_file_path = r'C:\Users\hamza\Desktop\supcom projects\donnee tp elasticsearch\photo_metadata_ex.csv'
+    output_directory = r'C:\Users\hamza\Desktop\supcom projects\cleaned-files'
+    new_csv_file_path = r'C:\Users\hamza\Desktop\supcom projects\cleaned-files\cleanedFile.csv'
 
     def checkImageIsNotCorrupted(self, url):
         response = requests.get(url)
@@ -50,7 +50,8 @@ class ImageCleaning:
                     row.append(url)
                     row.append(embeddingsGenerator.generateFromUrl(url))
                     rows_with_non_corrupted_urls.append(row)
-
+                    print("Loading : " + str(i))
+                    i = i+1
         self.generateCSV(rows_with_non_corrupted_urls, header)
 
     def generateCSV(self, rows_with_non_corrupted_urls, header):
