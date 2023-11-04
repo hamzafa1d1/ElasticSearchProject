@@ -23,8 +23,6 @@ export class SearchBarComponent {
     this.imagesService.getImageUrls(searchText).subscribe((response) => {
       this.listOfImageUrls = response;
       this.isLoading = false;
-      console.log(this.listOfImageUrls)
     })
-    console.log(this.searchTerm);
   }
 }
