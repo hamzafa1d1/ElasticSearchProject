@@ -5,3 +5,11 @@
   align-items: center; /* Center vertically */
   height: 100vh;
 }
+.custom-title {
+  color: #fff; /* Light text color */
+  padding: 20px;
+  text-align: center; /* Center align the text */
+  font-size: 36px; /* Adjust the font size as needed */
+  font-weight: bold; /* Make the text bold */
+  font-family: Arial, sans-serif;
+}

@@ -1,0 +1,7 @@
+.dark-background {
+  background: linear-gradient(to bottom, #555, #333); /* Gradient background */
+  color: #fff; /* Text color for better readability on dark background */
+  display: grid; /* Use Flexbox for centering */
+   /* Center vertically */
+  height: 100vh;
+}

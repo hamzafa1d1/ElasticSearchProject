@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./main-page.component.css']
 })
 export class MainPageComponent {
+  selectedSearch: string = ''; // Initially, no option is selected
+
+  chooseSearch(option: string) {
+    this.selectedSearch = option;
+  }
 
 }

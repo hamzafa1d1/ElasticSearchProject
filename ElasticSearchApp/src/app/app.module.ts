@@ -8,12 +8,14 @@ import {HttpClientModule} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {CarouselModule} from "ngx-bootstrap/carousel";
+import { ImageUploadComponent } from './Components/image-upload/image-upload.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainPageComponent,
-    SearchBarComponent
+    SearchBarComponent,
+    ImageUploadComponent
   ],
   imports: [
     BrowserModule,
