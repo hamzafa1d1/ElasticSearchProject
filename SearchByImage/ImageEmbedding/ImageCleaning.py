@@ -39,7 +39,7 @@ class ImageCleaning:
                 #skip first line containing column desc
                 if(i ==0):
                     i+=1
-                    header = row
+                    header = []
                     header.append('Url')
                     header.append('imageEmbedding')
                     continue
@@ -47,11 +47,14 @@ class ImageCleaning:
                 # Download the image
                 url = self.generateImageUrl(row)
                 if(self.checkImageIsNotCorrupted(url)):
-                    row.append(url)
-                    row.append(embeddingsGenerator.generateFromUrl(url))
-                    rows_with_non_corrupted_urls.append(row)
+                    # row.append(url)
+                    # row.append(embeddingsGenerator.generateFromUrl(url))
+                    string = "{}".format(embeddingsGenerator.generateFromUrl(url))
+                    rows_with_non_corrupted_urls.append([url, string])
                     print("Loading : " + str(i))
                     i = i+1
+                    if(i == 2):
+                        break
         self.generateCSV(rows_with_non_corrupted_urls, header)
 
     def generateCSV(self, rows_with_non_corrupted_urls, header):
@@ -60,6 +63,7 @@ class ImageCleaning:
             writer = csv.writer(new_csvfile)
             writer.writerow(header)  # Write the header
             for row in rows_with_non_corrupted_urls:
+                row[1] = "{}".format(row[1])
                 writer.writerow(row)
         print(f"Corrupted images have been deleted. Non-corrupted URLs saved to '{self.new_csv_file_path}'.")
 

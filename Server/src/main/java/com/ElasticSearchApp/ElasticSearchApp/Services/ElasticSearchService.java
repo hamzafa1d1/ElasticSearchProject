@@ -1,15 +1,14 @@
 package com.ElasticSearchApp.ElasticSearchApp.Services;
 
-import com.ElasticSearchApp.ElasticSearchApp.Models.ElasticSearchQuery;
-import com.ElasticSearchApp.ElasticSearchApp.Models.ElasticSearchResponse;
-import com.ElasticSearchApp.ElasticSearchApp.Models.ImageUrl;
-import com.ElasticSearchApp.ElasticSearchApp.Models.SearchText;
+import com.ElasticSearchApp.ElasticSearchApp.Models.*;
 import com.ElasticSearchApp.ElasticSearchApp.Utils.ImageUtils;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import java.awt.*;
 import java.util.List;
 
 @Service
@@ -30,6 +29,15 @@ public class ElasticSearchService {
                 .retrieve()
                 .bodyToMono(ElasticSearchResponse.class);
     }
+    public Mono<ElasticSearchResponse> fetchDataFromElasticSearchImageEmbedding(ImageEmbedding imageEmbedding) {
+        return webClient
+                .post()
+                .uri(FlickerPhotos) // Replace with your API endpoint
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(generateQueryForImageEmbeddingSearch(imageEmbedding))
+                .retrieve()
+                .bodyToMono(ElasticSearchResponse.class);
+    }
     private ElasticSearchQuery generateQuery(String searchTerm){
         ElasticSearchQuery elasticSearchQuery = new ElasticSearchQuery();
         ElasticSearchQuery.Query query = new ElasticSearchQuery.Query();
@@ -38,6 +46,19 @@ public class ElasticSearchService {
         multiMatch.setQuery(searchTerm);
         multiMatch.setFuzziness("Auto");
         multiMatch.setFields(List.of("tags", "title"));
+
+        query.setMulti_match(multiMatch);
+        elasticSearchQuery.setQuery(query);
+        return elasticSearchQuery;
+    }
+    private ElasticSearchQuery generateQueryForImageEmbeddingSearch(ImageEmbedding imageEmbedding){
+        ElasticSearchQuery elasticSearchQuery = new ElasticSearchQuery();
+        ElasticSearchQuery.Query query = new ElasticSearchQuery.Query();
+        ElasticSearchQuery.MultiMatch multiMatch = new ElasticSearchQuery.MultiMatch();
+
+        multiMatch.setQuery(imageEmbedding.Embedding.toString());
+        multiMatch.setFuzziness("Auto");
+        multiMatch.setFields(List.of("imageEmbedding"));
 
         query.setMulti_match(multiMatch);
         elasticSearchQuery.setQuery(query);
