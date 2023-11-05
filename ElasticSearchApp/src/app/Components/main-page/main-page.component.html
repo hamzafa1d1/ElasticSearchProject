@@ -1,3 +1,30 @@
-<div class="dark-background">
-  <app-search-bar></app-search-bar>
+<!--<div class="dark-background">-->
+
+<!--  <button class="btn btn-primary align-content-center" (click)="showSearchBar = !showSearchBar" style="width: 10%;">-->
+<!--    Toggle Components-->
+<!--  </button>-->
+
+<!--  <app-search-bar *ngIf="showSearchBar"></app-search-bar>-->
+<!--  <app-image-upload *ngIf="!showSearchBar"></app-image-upload>-->
+
+<!--</div>-->
+<div class="container text-center mt-5">
+  <h1 class="custom-title">Search Engine</h1>
+
+  <!-- Button Group for Search Options -->
+  <div class="btn-group mt-2" role="group" aria-label="Search Options">
+    <button type="button" class="btn btn-primary" (click)="chooseSearch('word')">Word Search</button>
+    <button type="button" class="btn btn-primary" (click)="chooseSearch('image')">Image Search</button>
+  </div>
+
+  <!-- Display Search Result -->
+  <div *ngIf="selectedSearch === 'word'">
+    <!-- Word-based search component goes here -->
+    <app-search-bar></app-search-bar>
+  </div>
+
+  <div *ngIf="selectedSearch === 'image'">
+    <!-- Image-based search component goes here -->
+    <app-image-upload></app-image-upload>
+  </div>
 </div>
