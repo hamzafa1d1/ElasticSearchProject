@@ -9,7 +9,7 @@ import reactor.core.publisher.Mono;
 
 @Service
 public class ImageEmbeddingService {
-    public static final String FastApiEndpoint = "http://localhost:5555";
+    public static final String FastApiEndpoint = "http://localhost:8000";
     public static final String generateEmbedding = "/uploadfile";
     private final WebClient webClient;
     public ImageEmbeddingService(WebClient.Builder webClientBuilder) {

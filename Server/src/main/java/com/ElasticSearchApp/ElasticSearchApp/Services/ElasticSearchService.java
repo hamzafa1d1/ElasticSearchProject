@@ -1,14 +1,11 @@
 package com.ElasticSearchApp.ElasticSearchApp.Services;
 
 import com.ElasticSearchApp.ElasticSearchApp.Models.*;
-import com.ElasticSearchApp.ElasticSearchApp.Utils.ImageUtils;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
-import java.awt.*;
 import java.util.List;
 
 @Service
@@ -51,18 +48,17 @@ public class ElasticSearchService {
         elasticSearchQuery.setQuery(query);
         return elasticSearchQuery;
     }
-    private ElasticSearchQuery generateQueryForImageEmbeddingSearch(ImageEmbedding imageEmbedding){
-        ElasticSearchQuery elasticSearchQuery = new ElasticSearchQuery();
-        ElasticSearchQuery.Query query = new ElasticSearchQuery.Query();
-        ElasticSearchQuery.MultiMatch multiMatch = new ElasticSearchQuery.MultiMatch();
+    private ElasticSearchKnnQuery generateQueryForImageEmbeddingSearch(ImageEmbedding imageEmbedding){
 
-        multiMatch.setQuery(imageEmbedding.Embedding.toString());
-        multiMatch.setFuzziness("Auto");
-        multiMatch.setFields(List.of("imageEmbedding"));
+        ElasticSearchKnnQuery elasticSearchKnnQuery = new ElasticSearchKnnQuery();
+        ElasticSearchKnnQuery.KnnConfig knnConfig = new ElasticSearchKnnQuery.KnnConfig();
 
-        query.setMulti_match(multiMatch);
-        elasticSearchQuery.setQuery(query);
-        return elasticSearchQuery;
+        knnConfig.k = 10;
+        knnConfig.field = "vector";
+        knnConfig.num_candidates = 100;
+        knnConfig.query_vector = imageEmbedding.Embedding;
+        elasticSearchKnnQuery.knn = knnConfig;
+        return elasticSearchKnnQuery;
     }
 
 }

@@ -22,10 +22,7 @@ public class ElasticSearchResponse {
             // Getters and setters for _source
 
             public static class Source {
-                public String id;
-                public String flickr_secret;
-                public String flickr_server;
-                public String flickr_farm;
+                public String url;
 
                 // Getters and setters for id, flickr_secret, flickr_server, flickr_farm
             }

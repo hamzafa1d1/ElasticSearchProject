@@ -31,7 +31,7 @@ class EmbeddingsGenerator:
             embedding = model.predict(img)
 
             # Return the embedding as a numpy array
-            return embedding.tolist()[0]
+            return embedding.tolist()[0][:2000]
 
         except Exception as e:
             print(f"Error: {e}")
@@ -57,7 +57,7 @@ class EmbeddingsGenerator:
             embedding = model.predict(img)
 
             # Return the embedding as a numpy array
-            return embedding.tolist()[0]
+            return embedding.tolist()[0][:2000]
 
         except Exception as e:
             print(f"Error: {e}")

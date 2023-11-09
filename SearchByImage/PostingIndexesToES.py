@@ -11,27 +11,18 @@ class PostingIndexesToES:
     index_name = 'flickrphotos'
     def generateMapping(self):
         return {
-            "settings": {
-                "number_of_shards": 1,
-                "number_of_replicas": 0,
-            },
             "mappings": {
-                "dynamic": False,
                 "properties": {
                     "id": {"type": "keyword"},
                     "url": {"type": "text"},
                     "vector": {
-                        "type": "elastiknn_dense_float_vector",
-                        "elastiknn": {
-                            "dims": 4096,
-                            "similarity": "L2",  # Use "l2" for Euclidean distance
-                            "model": "lsh",
-                            "L": 99,
-                            "k": 1,
-                            "w": 3
-                        }
+                        "type": "dense_vector",
+                        "dims": 2000,
+                        "index": True,
+                        "similarity": "l2_norm"
                     },
-                    "tags": {"type": "text"}
+                    "tags": {"type": "text"},
+                    "title": {"type": "text"}
                 }
             }
         }
@@ -56,13 +47,16 @@ class PostingIndexesToES:
                 if ImageCleaning().checkImageIsNotCorrupted(photo_url):
                     vector_list = EmbeddingsGenerator().generateFromUrl(photo_url)
                     tags = row[3]
+                    title = row[2]
                     doc = {
                         "id": uuid1(),
                         "url": photo_url,
                         "vector": vector_list,
-                        "tags": tags  # Include the 'tags' field in the document
+                        "tags": tags,  # Include the 'tags' field in the document
+                        "title": title
                     }
                     self.es.index(index= self.index_name, body=doc)
+                    self.es.search()
                 else:
                     print(f"Failed to fetch image from {photo_url}")
 
