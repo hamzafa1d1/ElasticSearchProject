@@ -15,12 +15,14 @@ export class ImageUploadComponent {
   }
 
   constructor(private imageUploadService: ImagesService) {
-
   }
 
   onSubmit() {
     if (this.selectedFile) {
-      this.imageUploadService.uploadImage(this.selectedFile).subscribe((response) => console.log("Image Uploaded Successfully") );
+      this.imageUploadService.uploadImage(this.selectedFile).subscribe((response) => {
+        console.log(this.selectedFile)
+        console.log(response);
+      });
     } else {
       alert('Please select a file before uploading.');
     }

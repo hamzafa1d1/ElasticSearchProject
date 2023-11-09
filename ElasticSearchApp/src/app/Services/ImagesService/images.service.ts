@@ -13,15 +13,11 @@ export class ImagesService {
   getImageUrls(searchText: SearchText): Observable<ImageUrl[]>{
     return this.http.post<ImageUrl[]>(endpoints.ServerUrl + endpoints.GetImages, searchText);
   }
-  getImageUrlsWhenSearchingByImage(image: File): Observable<ImageUrl[]>{
-    return this.http.post<ImageUrl[]>(endpoints.ServerUrl + endpoints.GetImagesWhenSearchingByPicture, image);
-  }
 
   uploadImage(image: File) {
     const formData = new FormData();
-    formData.append('file', image);
-
-    return this.http.post(endpoints.ServerUrl + endpoints.ImageUploadUrl, formData);
+    formData.append('file', image, image.name);
+    return this.http.post<ImageUrl[]>(endpoints.ServerUrl + endpoints.ImageUploadUrl, formData);
   }
 
 }
