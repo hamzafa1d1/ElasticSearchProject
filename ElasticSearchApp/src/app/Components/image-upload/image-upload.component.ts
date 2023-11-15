@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {ImagesService} from "../../Services/ImagesService/images.service";
+import {ImageUrl} from "../../Models/ImageUrl";
 
 @Component({
   selector: 'app-image-upload',
@@ -8,7 +9,7 @@ import {ImagesService} from "../../Services/ImagesService/images.service";
 })
 export class ImageUploadComponent {
   selectedFile: File | null = null;
-  listOfImageUrls: any = [];
+  listOfImageUrls: ImageUrl[] = [];
 
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
@@ -20,8 +21,7 @@ export class ImageUploadComponent {
   onSubmit() {
     if (this.selectedFile) {
       this.imageUploadService.uploadImage(this.selectedFile).subscribe((response) => {
-        console.log(this.selectedFile)
-        console.log(response);
+        this.listOfImageUrls = response
       });
     } else {
       alert('Please select a file before uploading.');

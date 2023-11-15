@@ -22,11 +22,10 @@ public class ImageEmbeddingService {
         MultipartBodyBuilder builder = new MultipartBodyBuilder();
         builder.part("file", image.getResource());
 
-        return webClient
-                .post()
+        return webClient.post()
                 .uri(generateEmbedding)
-                .contentType(MediaType.MULTIPART_FORM_DATA)  // Set content type only for the part, not for the entire request
-                .body(BodyInserters.fromMultipartData(builder.build()))  // Add the image as a part
+                .contentType(MediaType.MULTIPART_FORM_DATA)
+                .body(BodyInserters.fromMultipartData(builder.build()))
                 .retrieve()
                 .bodyToMono(ImageEmbedding.class);
     }
